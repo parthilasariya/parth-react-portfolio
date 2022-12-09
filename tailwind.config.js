@@ -7,6 +7,7 @@ module.exports = {
   ],
   theme: {
     screens: {
+    
       sm: '480px',
       md: '768px',
       lg: '976px',
@@ -14,8 +15,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        burtons: "burtons",
-        sora: "sora",
+      'sans': ['ui-sans-serif', 'Sçansita'],
         sansita: ["sansita"],
         poppins: ["Poppins", "sans-serif"],
       },
