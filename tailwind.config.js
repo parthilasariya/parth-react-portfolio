@@ -15,9 +15,7 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-      'sans': ['ui-sans-serif', 'Sçansita'],
-        sansita: ["sansita"],
-        poppins: ["Poppins", "sans-serif"],
+      'sans': ['ui-sans-serif', 'Sora'],
       },
     },
   },
