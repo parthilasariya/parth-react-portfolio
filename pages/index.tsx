@@ -3,7 +3,7 @@ import Head from "next/head";
 import { MdLightMode, MdDarkMode } from "react-icons/md";
 import { AiFillLinkedin, AiFillGithub } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaReact, FaHtml5, FaCss3Alt, FaFigma } from "react-icons/fa";
 import { SiJavascript, SiSolidity, SiPhp, SiMysql, SiBootstrap, SiLaravel, SiTailwindcss, SiRedis } from "react-icons/si";
 // Importing Images
@@ -21,43 +21,72 @@ import web6 from "/Users/parthilasariya/Documents/parth-react-portfolio/public/w
 // Importing CSS
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(false);
+
+  useEffect(() => {
+    // restore theme from localStorage
+    try {
+      const saved = localStorage.getItem("darkMode");
+      if (saved !== null) setDarkMode(saved === "true");
+    } catch (e) {
+      // ignore (SSR safety)
+    }
+    // trigger hero entrance animation
+    const t = setTimeout(() => setHeroVisible(true), 80);
+    return () => clearTimeout(t);
+  }, []);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("darkMode", String(next));
+      } catch (e) {}
+      return next;
+    });
+  };
 
   return (
     <div className={darkMode ? "dark" : ""}>
+      {/* Skip link for keyboard users */}
+      <a
+        href="#main"
+        className="sr-only focus:absolute focus:top-4 focus:left-4 focus:px-3 focus:py-2 focus:bg-white dark:focus:bg-gray-800 focus:text-sm focus:rounded focus:z-50"
+      >
+        Skip to content
+      </a>
       <Head>
         <title>Parth Ilasariya Portfolio</title>
         <meta name="description" content="Created By Parth Ilasariya" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className=" bg-white px-10 dark:bg-gray-900 md:px-20 lg:px-40">
+      <main id="main" className=" bg-white px-6 dark:bg-gray-900 md:px-20 lg:px-40">
         <section className="min-h-screen">
-          <nav className="p-10 mb-12 flex justify-between dark:text-white">
+          <nav className="sticky top-0 z-40 p-4 md:p-10 mb-4 md:mb-12 flex justify-between items-center dark:text-white transition-colors duration-300 bg-white/70 dark:bg-gray-900/70 backdrop-blur">
             <h1 className="text-xl  ">Parth Ilasariya</h1>
             <ul className="flex items-center">
-              
               {/* Dark Mode Toggle Button */}
 
               <li>
                 {darkMode ? (
                   <MdLightMode
-                    onClick={() => setDarkMode(false)}
+                    onClick={toggleDarkMode}
                     className="cursor-pointer text-2xl transition-all duration-500 text-yellow-400 hover:scale-125"
                     aria-label="Switch to light mode"
                   />
                 ) : (
                   <MdDarkMode
-                    onClick={() => setDarkMode(true)}
+                    onClick={toggleDarkMode}
                     className="cursor-pointer text-2xl transition-all duration-500 text-gray-700 hover:scale-125"
                     aria-label="Switch to dark mode"
                   />
-                )} 
-                    
+                )}
               </li>
                 {/* Resume Link */}
               <li>
                 <a
-                  className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-4 py-2 rounded-md ml-8 transition-all duration-300 hover:scale-105 hover:from-yellow-500 hover:to-orange-500"
+                  className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-4 py-2 rounded-md ml-8 transition-all duration-300 hover:scale-105 hover:from-yellow-500 hover:to-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
                   href="https://drive.google.com/file/d/1Nt82bPctPxtbcH_5IM9FJMVJBvJwxskT/view?usp=sharing"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -70,7 +99,7 @@ export default function Home() {
 
           {/* Main Start Section */}
 
-          <div className="text-center p-10 py-10">
+          <div className={`text-center p-10 py-10 transition-transform duration-700 ${heroVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
             <h2 className="text-3xl md:text-5xl py-2 text-orange-500 font-medium dark:text-orange-500">
               Parth Ilasariya
             </h2>
@@ -83,7 +112,7 @@ export default function Home() {
           </div>
               
               {/* Social Media Links */}
-          <div className="text-5xl flex justify-center gap-16 py-3 text-gray-800 dark:text-gray-400 ">
+          <div className="text-4xl md:text-5xl flex justify-center gap-16 py-3 text-gray-800 dark:text-gray-400 ">
             <a
             href="https://www.linkedin.com/in/parth-ilasariya/"
             target="_blank"
@@ -106,7 +135,7 @@ export default function Home() {
               <MdEmail />
             </a>
           </div>
-          <div className="relative mx-auto bg-gradient-to-b from-orange-500 rounded-full w-80 h-80 mt-20 overflow-hidden md:h-96 md:w-96">
+          <div className="relative mx-auto bg-gradient-to-b from-orange-500 rounded-full w-64 h-64 mt-16 overflow-hidden md:h-96 md:w-96">
             <Image
               unoptimized={true}
               alt="cover"
@@ -320,9 +349,9 @@ export default function Home() {
       href="https://kitikits.com/"
       target="_blank"
       rel="noopener noreferrer"
-      className="w-full"
+      className="w-full focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
     >
-      <div className="w-full aspect-[4/3] relative rounded-lg overflow-hidden">
+      <div className="w-full aspect-[4/3] relative rounded-lg overflow-hidden min-h-[180px]">
         <Image
           unoptimized={true}
           alt="Project 1 - UI Design"
@@ -479,11 +508,10 @@ export default function Home() {
         </section>
       </main>
 
-          {/* Footer Section */}
+      {/* Footer Section */}
       <footer className="flex flex-col md:flex-row h-auto md:h-24 w-full dark:bg-gray-900 items-center justify-center border-t px-4 py-6 gap-2 text-center">
         <span className="flex items-center justify-center dark:text-white text-sm md:text-base">
-          ©{new Date().getFullYear()} All rights reserved | Developed by Parth Ilasariya{" "}
-          <span className="ml-1">❤️</span>
+          ©{new Date().getFullYear()} All rights reserved | Design and Developed by Parth Ilasariya 💛{" "}
         </span>
 
         {/* Optional: Add social links for quick access */}
