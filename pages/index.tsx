@@ -480,10 +480,9 @@ export default function Home() {
       </main>
 
           {/* Footer Section */}
-
       <footer className="flex flex-col md:flex-row h-auto md:h-24 w-full dark:bg-gray-900 items-center justify-center border-t px-4 py-6 gap-2 text-center">
         <span className="flex items-center justify-center dark:text-white text-sm md:text-base">
-          ©2025 All rights reserved | Developed by Parth Ilasariya{" "}
+          ©{new Date().getFullYear()} All rights reserved | Developed by Parth Ilasariya{" "}
           <span className="ml-1">❤️</span>
         </span>
 
