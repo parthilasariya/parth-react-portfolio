@@ -10,7 +10,6 @@
 
 # next.js
 /.next/
-/_static/
 /out/
 
 # production
